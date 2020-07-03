@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+		<section>
+			<div class="container">
+
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="section-title">
+						<h2>My Documents</h2>
+					</div>
+				</div>
+			</div>
+
+			{% for obj in object_list %}
+
+					<div class="row row-0-gutter">
+						<div class="col-md-8 col-md-offset-2 col-0-gutter">
+							<h2><strong>{{ obj.title }}</strong></h2>
+							<p>{{ obj.description }}</p>
+							{% for doc in document_list %}
+							{% if doc.document_id == obj.id %}
+							<a href="/viewerjs/index.html#{{ cdn }}/media/{{ doc.document_url }}" target="_blank">
+								<button class="btn btn-info" style="margin: 0 5px 10px 0;">View Document</button>
+							</a>
+							{% endif %}
+							{% endfor %}
+							<br>
+							{% if request.user.is_authenticated %}
+							{% if obj.uploaded_by == request.user %}
+							<a href="{% url 'documents:delete' pk=obj.pk %}">
+								<button class="btn btn-danger">Delete Document</button>
+							</a>
+							{% endif %}
+							{% endif %}
+							<hr>
+						</div>
+					</div>
+
+				
+			{% endfor %}
+
+
+			</div>
+		</section>
+
+
+{% endblock content %}

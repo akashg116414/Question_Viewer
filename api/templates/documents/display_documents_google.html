@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+	<section>
+		<div class="container">
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<div class="section-title">
+					<h2>All Question Documents</h2>
+				</div>
+			</div>
+		</div>
+
+		{% for obj in object_list %}
+
+				<div class="row row-0-gutter">
+					<div class="col-md-8 col-md-offset-2 col-0-gutter">
+						<h2><strong>{{ obj.name }}</strong></h2>
+						{% for doc in document_list %}
+						{% if doc.group_id == obj.id %}
+						<!-- <a href="/viewerjs/index.html#{{ cdn }}/media/{{ doc.question }}" target="_blank"> -->
+						<iframe src="http://docs.google.com/viewer?url=http://127.0.0.1:8000/media/{{ doc.question}}&embedded=true" style="margin:0 auto; width:800px; height:800px;" frameborder="0"></iframe>
+						<p>{{ doc.comment }}</p>
+							<!-- <iframe src="https://drive.google.com/viewerng/viewer?url={{ cdn }}/media/{{ doc.document_url }}" embedded=true></iframe> -->
+							<button class="btn btn-info" style="margin: 0 5px 10px 0;">View Document</button>
+						</a>
+						{% endif %}
+						{% endfor %}
+						<hr>
+					</div>
+				</div>
+			{% endfor %}
+
+		</div>
+	</section>
+
+{% endblock content %}
